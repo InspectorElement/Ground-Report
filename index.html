@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANDo514PuqSKpPQWKGg2axZ8AWt7rOG_w&libraries=places"></script>
+  <style>
+    body {
+      background-color: #f2f2f2;
+      color: #383838;
+      margin: 5px;
+    }
+    h1 {
+      color: #ee4b28;
+    }
+    select {
+      background-color: #f2f2f2;
+      border: 1px solid #ee4b28;
+      color: #383838;
+      height: 30px;
+      margin: 5px;
+    }
+    button {
+      background-color: #ee4b28;
+      border: 1px solid #ee4b28;
+      color: #f2f2f2;
+      height: 30px;
+      border-radius: 5px;
+      margin: 5px;
+    }
+    div {
+      height: 400px;
+    }
+  </style>
+</head>
+<body>
+<p>paragraph</p>
+<h1>header</h1>
+<button>button</button>
+<select>
+  <option value="none">Choose One</option>
+  <option value="">Mace</option>
+  <option value="">Tear Gas</option>
+  <option value="">Rubber Bullets</option>
+  <option value="">Water Cannons</option>
+  <option value="">Flares</option>
+  <option value="">Flash Grenades</option>
+</select><br>
+<button id="find">Find Medical Care</button>
+<div id="map"></div>
+</body>
+<script>
+$("#find").click(function(){
+  var map;
+  var service;
+  var infowindow;
+  var markers = [];
+
+  function initialize() {
+    var pyrmont = new google.maps.LatLng(-33.8665433, 151.1956316);
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: pyrmont,
+        zoom: 15
+      });
+    var request = {
+      location: pyrmont,
+      radius: '500',
+      types: ['hospital']
+    };
+    service = new google.maps.places.PlacesService();
+    service.nearbySearch(request, callback);
+  }
+  function createMarker(object) {
+    console.log(object);
+    var marker = new google.maps.Marker({
+      map: map,
+      position: object.geometry.location,
+      title: object.name,
+    })
+  }
+  function callback(results, status) {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        var place = results[i];
+        createMarker(results[i]);
+      }
+    }
+  }
+  initialize();
+  callback();
+});
+</script>
+</html>
