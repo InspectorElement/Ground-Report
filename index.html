@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>JS Bin</title>
-  <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANDo514PuqSKpPQWKGg2axZ8AWt7rOG_w&libraries=places"></script>
   <style>
     body {
@@ -30,7 +30,7 @@
       border-radius: 5px;
       margin: 5px;
     }
-    div {
+    #map {
       height: 400px;
     }
   </style>
@@ -52,44 +52,44 @@
 <div id="map"></div>
 </body>
 <script>
-$("#find").click(function(){
-  var map;
-  var service;
-  var infowindow;
-  var markers = [];
+  $("#find").click(function(){
+    var map;
+    var service;
+    var infowindow;
+    var markers = [];
 
-  function initialize() {
-    var pyrmont = new google.maps.LatLng(-33.8665433, 151.1956316);
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: pyrmont,
-        zoom: 15
-      });
-    var request = {
-      location: pyrmont,
-      radius: '500',
-      types: ['hospital']
-    };
-    service = new google.maps.places.PlacesService();
-    service.nearbySearch(request, callback);
-  }
-  function createMarker(object) {
-    console.log(object);
-    var marker = new google.maps.Marker({
-      map: map,
-      position: object.geometry.location,
-      title: object.name,
-    })
-  }
-  function callback(results, status) {
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-      for (var i = 0; i < results.length; i++) {
-        var place = results[i];
-        createMarker(results[i]);
+    function initialize() {
+      var nyc = new google.maps.LatLng(40.7128, -74.0059);
+      map = new google.maps.Map(document.getElementById("map"), {
+          center: nyc,
+          zoom: 15
+        });
+      var request = {
+        location: nyc,
+        radius: '500',
+        types: ['hospital']
+      };
+      service = new google.maps.places.PlacesService();
+      service.nearbySearch(request, callback);
+    }
+    function createMarker(object) {
+      console.log(object);
+      var marker = new google.maps.Marker({
+        map: map,
+        position: object.geometry.location,
+        title: object.name,
+      })
+    }
+    function callback(results, status) {
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+          var place = results[i];
+          createMarker(results[i]);
+        }
       }
     }
-  }
-  initialize();
-  callback();
-});
+    initialize();
+    callback();
+  });
 </script>
 </html>
