@@ -32,6 +32,7 @@
     }
     #map {
       height: 400px;
+      width: 600px;
     }
     button:active {
       background-color: #bd2f0f;
@@ -58,7 +59,7 @@
 </select><br>
 <button id="submit">Submit</button><br><br>
 <div id="message"></div><br>
-<button id="find">Find Medical Care</button>
+<button id="find">Find Medical Care</button><br><br>
 <div id="map"></div>
 </body>
 <script>
@@ -83,6 +84,7 @@
       var request = {
         location: nyc,
         radius: '500',
+        keyword: ['emergency', 'urgent'],
         type: ['hospital']
       };
       service = new google.maps.places.PlacesService(map);
