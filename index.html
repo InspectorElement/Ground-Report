@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>JS Bin</title>
+  <title>Report It</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANDo514PuqSKpPQWKGg2axZ8AWt7rOG_w&libraries=places"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANDo514PuqSKpPQWKGg2axZ8AWt7rOG_w&libraries=places"></script>
   <style>
     body {
       background-color: #f2f2f2;
@@ -33,52 +33,75 @@
     #map {
       height: 400px;
     }
+    button:active {
+      background-color: #bd2f0f;
+      border: 1px solid #bd2f0f;
+      color: #f2f2f2;
+      height: 30px;
+      border-radius: 5px;
+      margin: 5px;
+    }
   </style>
 </head>
 <body>
+<center>
 <p>paragraph</p>
 <h1>header</h1>
-<button>button</button>
-<select>
-  <option value="none">Choose One</option>
-  <option value="">Mace</option>
-  <option value="">Tear Gas</option>
-  <option value="">Rubber Bullets</option>
-  <option value="">Water Cannons</option>
-  <option value="">Flares</option>
-  <option value="">Flash Grenades</option>
+<select id="select">
+  <option value="null">Choose One</option>
+  <option value="Mace">Mace</option>
+  <option value="Tear Gas">Tear Gas</option>
+  <option value="Rubber Bullets">Rubber Bullets</option>
+  <option value="Water Cannons">Water Cannons</option>
+  <option value="Flares">Flares</option>
+  <option value="Flash Grenades">Flash Grenades</option>
 </select><br>
+<button id="submit">Submit</button><br><br>
+<div id="message"></div><br>
 <button id="find">Find Medical Care</button>
 <div id="map"></div>
 </body>
 <script>
+  $("#submit").click(function(){
+    var message = "Your report has been recieved."
+    $("#message").html(message);
+  });
   $("#find").click(function(){
     var map;
     var service;
     var infowindow;
     var markers = [];
-
+    var mapPlace;
+    var content;
     function initialize() {
       var nyc = new google.maps.LatLng(40.7128, -74.0059);
-      map = new google.maps.Map(document.getElementById("map"), {
+      mapPlace = document.getElementById("map");
+      map = new google.maps.Map(mapPlace, {
           center: nyc,
           zoom: 15
         });
       var request = {
         location: nyc,
         radius: '500',
-        types: ['hospital']
+        type: ['hospital']
       };
-      service = new google.maps.places.PlacesService();
+      service = new google.maps.places.PlacesService(map);
       service.nearbySearch(request, callback);
     }
     function createMarker(object) {
-      console.log(object);
       var marker = new google.maps.Marker({
         map: map,
         position: object.geometry.location,
         title: object.name,
       })
+      console.log(object);
+      content = '<div id="content">' + '<div id="siteNotice">' + '</div>'+ '<h1 id="firstHeading" class="firstHeading">' + object.name + '</h1>'+ '<div id="bodyContent">' + '<p><b>' + object.name + '</b>, is located at ' + object.vicinity + '.</p>'+ '</div>'+ '</div>';
+      var infowindow = new google.maps.InfoWindow({
+        content: content
+      })
+      marker.addListener('click', function() {
+        infowindow.open(map, marker);
+      });
     }
     function callback(results, status) {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -89,7 +112,6 @@
       }
     }
     initialize();
-    callback();
   });
 </script>
 </html>
