@@ -1,6 +1,6 @@
 # report-it
-### Style Guide:
-#### #f2f2f2 as the background color,  #ee4b28 as the accent color. Text will be #383838.
+### What is report-it?
+#### Report-it is a tool for protestors. It allows them to report violence at protests and find medical care near them.
  
 
 
