@@ -5,8 +5,15 @@
   <meta name="viewport" content="width=device-width">
   <title>Report It</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="https://cloudboost.io/js-sdk/cloudboost.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANDo514PuqSKpPQWKGg2axZ8AWt7rOG_w&libraries=places"></script>
   <style>
+  .section input[type="radio"] {
+    display: none;
+  }
+.container {
+  margin-bottom: 10px;
+}
     body {
       background-color: #f2f2f2;
       color: #383838;
@@ -14,13 +21,6 @@
     }
     h1 {
       color: #ee4b28;
-    }
-    select {
-      background-color: #f2f2f2;
-      border: 1px solid #ee4b28;
-      color: #383838;
-      height: 30px;
-      margin: 5px;
     }
     button {
       background-color: #ee4b28;
@@ -42,31 +42,139 @@
       border-radius: 5px;
       margin: 5px;
     }
+    input {
+      background-color: #f2f2f2;
+      border: 1px solid #ee4b28;
+      color: #383838;
+      height: 30px;
+      margin: 5px;
+    }
+    ::-webkit-input-placeholder {
+      color: #383838;
+    }
+    ::-moz-placeholder {
+      color: #383838;
+    }
+    :-ms-input-placeholder {
+      color: #383838;
+    }
+    :-moz-placeholder {
+      color: #383838;
+    }
+    .container label {
+      position: relative;
+    }
+    .container span::before,
+    .container span::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+    }
+
+    .container span.radio:hover {
+      cursor: pointer;
+    }
+    .container span.radio::before {
+      left: -52px;
+      width: 45px;
+      height: 25px;
+      background-color:  #b3b3b3;
+      border-radius: 50px;
+    }
+    .container span.radio::after {
+      left: -49px;
+      width: 17px;
+      height: 17px;
+      border-radius: 10px;
+      background-color:  #737373;
+      transition: left .25s, background-color .25s;
+    }
+    input[type="radio"]:checked + label span.radio::after {
+      left: -27px;
+      background-color: #ee4b28;
+    }
   </style>
 </head>
 <body>
 <center>
-<p>paragraph</p>
-<h1>header</h1>
-<select id="select">
-  <option value="null">Choose One</option>
-  <option value="Mace">Mace</option>
-  <option value="Tear Gas">Tear Gas</option>
-  <option value="Rubber Bullets">Rubber Bullets</option>
-  <option value="Water Cannons">Water Cannons</option>
-  <option value="Flares">Flares</option>
-  <option value="Flash Grenades">Flash Grenades</option>
-</select><br>
-<button id="submit">Submit</button><br><br>
+  <br><br>
+<form id="select">
+  <section id="first" class="section">
+    <div class="container">
+    <input type="radio" name="type" value="Mace" id="mace"><label for="mace"><span class="radio">Mace</span></label><br>
+    </div>
+    <div class="container">
+    <input type="radio" name="type" value="Tear Gas" id="tear"><label for="tear"><span class="radio">Tear Gas</span></label><br>
+    </div>
+    <div class="container">
+    <input type="radio" name="type" value="Rubber Bullets" id="rubber"><label for="rubber"><span class="radio">Rubber Bullets</span></label><br>
+    </div>
+    <div class="container">
+    <input type="radio" name="type" value="Water Cannons" id="water"><label for="water"><span class="radio">Water Cannons</span></label><br>
+    </div>
+    <div class="container">
+    <input type="radio" name="type" value="Flares" id="flares"><label for="flares"><span class="radio">Flares</span></label><br>
+    </div>
+    <div class="container">
+    <input type="radio" name="type" value="Flash Grenades" id="flash"><label for="flash"><span class="radio">Flash Grenades</span></label><br>
+    </div>
+  </section>
+</form><br>
+ <button id="submit" onclick="geoFindMe()">Submit</button><br><br>
 <div id="message"></div><br>
 <button id="find">Find Medical Care</button><br><br>
-<div id="map"></div>
+<div id="map"></div><br><br>
 </body>
 <script>
-  $("#submit").click(function(){
-    var message = "Your report has been recieved."
-    $("#message").html(message);
-  });
+$(document).ready(function () {
+$("#find").hide();
+$("#map").hide();
+});
+var latitude;
+var longitude;
+CB.CloudApp.init('piawrqmdcydf', '1cc906b3-85c5-423f-9aca-2aec7c9539b0');
+function geoFindMe() {
+  var output = document.getElementById("out");
+
+  if (!navigator.geolocation){
+    console.log("Geolocation is not supported by your browser</p>");
+    return;
+  }
+  function success(position) {
+    latitude  = position.coords.latitude;
+    longitude = position.coords.longitude;
+      if ($("#select").val() == "null") {
+        var message = "Please select a valid option.";
+        $("#message").html(message);
+      }
+      else {
+        var message = "Your report has been recieved.";
+        $("#message").html(message);
+        var obj = new CB.CloudObject("report");
+        obj.set("type", document.querySelector('[name="type"]:checked').value);
+        obj.set("latitude", latitude);
+        obj.set("longitude", longitude);
+        obj.save({
+          success: function(obj) {
+            console.log("Save function successful.");
+            $("#find").show();
+            $("#map").show();
+          },
+          error: function(err) {
+            var message = "It seems that you are not connected to the internet. Please try again.";
+            $("#message").html(message);
+          }
+        });
+      }
+    }
+    function error() {
+      console.log("Unable to retrieve your location");
+    }
+    navigator.geolocation.getCurrentPosition(success, error);
+  };
+
   $("#find").click(function(){
     var map;
     var service;
@@ -75,15 +183,15 @@
     var mapPlace;
     var content;
     function initialize() {
-      var nyc = new google.maps.LatLng(40.7128, -74.0059);
+      var whereIam = new google.maps.LatLng(latitude, longitude);
       mapPlace = document.getElementById("map");
       map = new google.maps.Map(mapPlace, {
-          center: nyc,
+          center: whereIam,
           zoom: 15
         });
       var request = {
-        location: nyc,
-        radius: '500',
+        location: whereIam,
+        radius: '10000',
         keyword: ['emergency', 'urgent'],
         type: ['hospital']
       };
