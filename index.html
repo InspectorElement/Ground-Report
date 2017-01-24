@@ -78,7 +78,6 @@
       margin: auto;
       font-family: 'Nunito', sans-serif;
     }
-
     .container span.radio:hover {
       cursor: pointer;
       font-family: 'Nunito', sans-serif;
@@ -90,6 +89,7 @@
       background-color:  #b3b3b3;
       border-radius: 50px;
       font-family: 'Nunito', sans-serif;
+      text-align: left;
     }
     .container span.radio::after {
       left: -49px;
@@ -116,6 +116,7 @@
       font-weight: extra-bold;
     }
     #first {
+      margin: 400px;
       text-align: left;
     }
   </style>
@@ -161,7 +162,6 @@ var longitude;
 CB.CloudApp.init('piawrqmdcydf', '1cc906b3-85c5-423f-9aca-2aec7c9539b0');
 function geoFindMe() {
   var output = document.getElementById("out");
-
   if (!navigator.geolocation){
     console.log("Geolocation is not supported by your browser</p>");
     return;
@@ -198,7 +198,6 @@ function geoFindMe() {
     }
     navigator.geolocation.getCurrentPosition(success, error);
   };
-
   $("#find").click(function(){
     var map;
     var service;
