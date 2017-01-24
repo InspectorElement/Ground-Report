@@ -3,21 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Report It</title>
+  <title>Ground Report</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="https://cloudboost.io/js-sdk/cloudboost.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANDo514PuqSKpPQWKGg2axZ8AWt7rOG_w&libraries=places"></script>
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:extra-bold" rel="stylesheet">
   <style>
-  .section input[type="radio"] {
-    display: none;
-  }
-.container {
-  margin-bottom: 10px;
-}
+    .section input[type="radio"] {
+      display: none;
+    }
+    .container {
+      margin-bottom: 10px;
+    }
     body {
       background-color: #f2f2f2;
       color: #383838;
       margin: 5px;
+      font-family: 'Nunito', sans-serif;
     }
     h1 {
       color: #ee4b28;
@@ -29,6 +32,8 @@
       height: 30px;
       border-radius: 5px;
       margin: 5px;
+      font-size: 15px;
+      font-family: 'Nunito', sans-serif;
     }
     #map {
       height: 400px;
@@ -71,10 +76,12 @@
       top: 0;
       bottom: 0;
       margin: auto;
+      font-family: 'Nunito', sans-serif;
     }
 
     .container span.radio:hover {
       cursor: pointer;
+      font-family: 'Nunito', sans-serif;
     }
     .container span.radio::before {
       left: -52px;
@@ -82,6 +89,7 @@
       height: 25px;
       background-color:  #b3b3b3;
       border-radius: 50px;
+      font-family: 'Nunito', sans-serif;
     }
     .container span.radio::after {
       left: -49px;
@@ -90,16 +98,29 @@
       border-radius: 10px;
       background-color:  #737373;
       transition: left .25s, background-color .25s;
+      font-family: 'Nunito', sans-serif;
     }
     input[type="radio"]:checked + label span.radio::after {
       left: -27px;
       background-color: #ee4b28;
+      font-family: 'Nunito', sans-serif;
+    }
+    p {
+      padding: 25px;
+      margin-left: 200px;
+      margin-right: 200px;
+      font-family: 'Nunito', sans-serif;
+    }
+    strong {
+      font-family: 'Nunito', sans-serif;
+      font-weight: extra-bold;
     }
   </style>
 </head>
 <body>
 <center>
   <br><br>
+<p><strong><strong>What is Ground Report?</strong></strong>  Ground Report is an app that allows users to anonymously report violence at protests. By submitting the form of violence, the app will get your location, and add it to a google maps chart showing other places where people have reported police violence.</p>
 <form id="select">
   <section id="first" class="section">
     <div class="container">
