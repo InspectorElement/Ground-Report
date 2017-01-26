@@ -6,9 +6,9 @@
     <title>Ground Report</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://cloudboost.io/js-sdk/cloudboost.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANDo514PuqSKpPQWKGg2axZ8AWt7rOG_w&libraries=places"></script>
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:extra-bold" rel="stylesheet">
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
     <style>
       .section input[type="radio"] {
         display: none;
@@ -124,8 +124,8 @@
   </head>
   <body>
   <center>
-    <br><button id="viewIncidents" onclick="viewIncidents()">View Incidents</button><br>
-  <p><strong><strong>What is Ground Report?</strong></strong>  Ground Report is an app that allows users to anonymously report violence at protests. By submitting the form of violence, the app will get your location, and add it to a google maps chart showing other places where people have reported police violence.</p>
+  <button id="view">Incidents</button>
+  <p><strong><strong>What is Ground Report?</strong></strong>Ground Report is an app that allows users to anonymously report violence at protests. By submitting the form of violence, the app will get your location, and add it to a google maps chart showing other places where people have reported police violence.</p>
   <form id="select">
     <section id="first" class="section">
       <div class="container">
@@ -154,13 +154,45 @@
   <div id="map"></div><br><br>
   </body>
   <script>
-  $(document).ready(function () {
-  $("#find").hide();
-  });
   var latitude;
   var longitude;
   var incidents = [];
   CB.CloudApp.init('piawrqmdcydf', '1cc906b3-85c5-423f-9aca-2aec7c9539b0');
+  function initMap() {
+    var query = new CB.CloudQuery("report");
+    query.exists('type');
+    query.find({
+      success: function(list) {
+        console.log(list);
+        for (var i = 0; i < list.length; i++) {
+          var lat = list[i].document.latitude;
+          var lon = list[i].document.longitude;
+          var type = list[i].document.type;
+          var concat = "lat: " + lat + ", lng: " + lon;
+          incidents.push({concat});
+          console.log(incidents);
+          var mapPlace = document.getElementById("map");
+          var map = new google.maps.Map(mapPlace, {
+            zoom: 3,
+            center: {lat: -28.024, lng: 140.887}
+          });
+          var markers = incidents.map(function(location, i) {
+            return new google.maps.Marker({
+              position: location,
+              label: type
+            });
+          });
+          var markerCluster = new MarkerClusterer(map, markers, {
+            imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+            });
+        }
+      },
+      error: function(err) {
+        var message = "It seems that you are not connected to the internet. Please try again.";
+        $("#message").html(message);
+      }
+    })
+  }
   function geoFindMe() {
     var output = document.getElementById("out");
     if (!navigator.geolocation){
@@ -175,7 +207,7 @@
           $("#message").html(message);
         }
         else {
-          var message = "Your report has been recieved.";
+          var message = "Your report has been received.";
           $("#message").html(message);
           var obj = new CB.CloudObject("report");
           obj.set("type", document.querySelector('[name="type"]:checked').value);
@@ -198,67 +230,6 @@
       }
       navigator.geolocation.getCurrentPosition(success, error);
     };
-    $("#find").click(function(){
-      var map;
-      var service;
-      var infowindow;
-      var markers = [];
-      var mapPlace;
-      var content;
-      function initialize() {
-        var whereIam = new google.maps.LatLng(latitude, longitude);
-        mapPlace = document.getElementById("map");
-        map = new google.maps.Map(mapPlace, {
-            center: whereIam,
-            zoom: 15
-          });
-        var request = {
-          location: whereIam,
-          radius: '10000',
-          keyword: ['emergency', 'urgent'],
-          type: ['hospital']
-        };
-        service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(request, callback);
-      }
-      function createMarker(object) {
-        var marker = new google.maps.Marker({
-          map: map,
-          position: object.geometry.location,
-          title: object.name,
-        })
-        console.log(object);
-        content = '<div id="content">' + '<div id="siteNotice">' + '</div>'+ '<h1 id="firstHeading" class="firstHeading">' + object.name + '</h1>'+ '<div id="bodyContent">' + '<p><b>' + object.name + '</b>, is located at ' + object.vicinity + '.</p>'+ '</div>'+ '</div>';
-        var infowindow = new google.maps.InfoWindow({
-          content: content
-        })
-        marker.addListener('click', function() {
-          infowindow.open(map, marker);
-        });
-      }
-      function callback(results, status) {
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
-          for (var i = 0; i < results.length; i++) {
-            var place = results[i];
-            createMarker(results[i]);
-          }
-        }
-      }
-      initialize();
-    });
-     function viewIncidents() {
-      var query = new CB.CloudQuery("report");
-      query.exists('type');
-      query.find({
-        success: function(list) {
-          console.log(list);
-          // look here for maps idea https://developers.google.com/maps/documentation/javascript/marker-clustering
-        },
-        error: function(err) {
-          var message = "It seems that you are not connected to the internet. Please try again.";
-          $("#message").html(message); 
-        }       
-      });
-    }
   </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBfZmoz6oPPvfNswTnm9z2mtNsmjCM9Yo&callback=initMap"></script>
   </html>
