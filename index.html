@@ -116,7 +116,6 @@
       }
       #first {
         margin-left: 48%;
-        margin-right 50%;
         margin-top: 20px;
         text-align: left;
       }
@@ -125,7 +124,7 @@
   <body>
   <center>
   <button id="view">Incidents</button>
-  <p><strong><strong>What is Ground Report?</strong></strong>Ground Report is an app that allows users to anonymously report violence at protests. By submitting the form of violence, the app will get your location, and add it to a google maps chart showing other places where people have reported police violence.</p>
+  <p><strong><strong>Anonymously report violence at protests.</strong></strong></p>
   <form id="select">
     <section id="first" class="section">
       <div class="container">
@@ -167,16 +166,17 @@
         for (var i = 0; i < list.length; i++) {
           var lat = list[i].document.latitude;
           var lon = list[i].document.longitude;
-          var type = list[i].document.type;
-          var concat = "lat: " + lat + ", lng: " + lon;
-          incidents.push({concat});
+          var latlong = { "lat": lat, "lng": lon };
+          incidents.push(latlong);
           console.log(incidents);
           var mapPlace = document.getElementById("map");
           var map = new google.maps.Map(mapPlace, {
             zoom: 3,
-            center: {lat: -28.024, lng: 140.887}
+            center: {lat: 0, lng: 0},
+            gestureHandling: 'auto'
           });
           var markers = incidents.map(function(location, i) {
+            var type = list[i].document.type;
             return new google.maps.Marker({
               position: location,
               label: type
