@@ -17,7 +17,7 @@
         margin-bottom: 10px;
       }
       body {
-        background-color: #f2f2f2;
+        background-color: #FEFEFA;
         color: #383838;
         margin: 5px;
         font-family: 'Nunito', sans-serif;
@@ -123,7 +123,6 @@
   </head>
   <body>
   <center>
-  <button id="view">Incidents</button>
   <p><strong><strong>Anonymously report violence at protests.</strong></strong></p>
   <form id="select">
     <section id="first" class="section">
@@ -145,11 +144,13 @@
       <div class="container">
       <input type="radio" name="type" value="Flash Grenades" id="flash"><label for="flash"><span class="radio">Flash Grenades</span></label><br>
       </div>
+      <div class="container">
+      <input type="radio" name="type" value="Medic Needed" id="medic"><label for="medic"><span class="radio">Medic Needed</span></label><br>
+      </div>
     </section>
   </form><br>
    <button id="submit" onclick="geoFindMe()">Submit</button><br><br>
   <div id="message"></div><br>
-  <button id="find">Find Medical Care</button><br><br>
   <div id="map"></div><br><br>
   </body>
   <script>
@@ -171,15 +172,16 @@
           console.log(incidents);
           var mapPlace = document.getElementById("map");
           var map = new google.maps.Map(mapPlace, {
-            zoom: 3,
-            center: {lat: 0, lng: 0},
+            zoom: 4,
+            center: {lat: 40.7128, lng: -74.0059},
             gestureHandling: 'auto'
           });
           var markers = incidents.map(function(location, i) {
             var type = list[i].document.type;
             return new google.maps.Marker({
               position: location,
-              label: type
+              label: type,
+              primaryColor: "#ee4b28"
             });
           });
           var markerCluster = new MarkerClusterer(map, markers, {
@@ -196,7 +198,7 @@
   function geoFindMe() {
     var output = document.getElementById("out");
     if (!navigator.geolocation){
-      console.log("Geolocation is not supported by your browser</p>");
+      console.log("Geolocation is not supported by your browser.</p>");
       return;
     }
     function success(position) {
