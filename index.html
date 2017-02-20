@@ -52,7 +52,7 @@
   CB.CloudApp.init('piawrqmdcydf', 'f96bfed6-451e-445a-ab83-d4925807ca6e');
   function initMap() {
     var query = new CB.CloudQuery("report");
-    query.exists('id');
+    query.setLimit(10000);
     query.find({
       success: function(list) {
         for (var i = 0; i < list.length; i++) {
