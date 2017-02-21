@@ -68,11 +68,20 @@
           });
           var markers = incidents.map(function(location, i) {
             var type = list[i].document.type;
-            return new google.maps.Marker({
-              position: location,
-              label: type,
-              primaryColor: "#ee4b28"
-            });
+            if (type == "Mace", "Tear Gas", "Rubber Bullets", "Water Cannons", "Flares", "Flash Grenades") {
+              return new google.maps.Marker({
+                position: location,
+                label: type,
+                primaryColor: "#ee4b28"
+              });
+            }
+            else {
+              return new google.maps.Marker({
+                position: location,
+                label: type,
+                primaryColor: "#383838"
+              });
+            }
           });
           var markerCluster = new MarkerClusterer(map, markers, {
             imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
