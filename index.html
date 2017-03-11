@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
   <html>
   <head>
     <meta charset="utf-8">
@@ -7,8 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://cloudboost.io/js-sdk/cloudboost.js"></script>
     <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
-    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
-  </script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
     <link rel="stylesheet" type="text/css" href="styles.css">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   </head>
@@ -19,25 +18,25 @@
   <form id="select">
     <section id="first" class="section">
       <div class="container">
-      <input type="radio" name="type" value="Mace" id="mace"><label for="mace"><span class="radio">Mace</span></label><br>
+      <input type="radio" name="type" value="MACE" id="mace"><label for="mace"><span class="radio">Mace (Ma)</span></label><br>
       </div>
       <div class="container">
-      <input type="radio" name="type" value="Tear Gas" id="tear"><label for="tear"><span class="radio">Tear Gas</span></label><br>
+      <input type="radio" name="type" value="TEAR GAS" id="tear"><label for="tear"><span class="radio">Tear Gas</span></label><br>
       </div>
       <div class="container">
-      <input type="radio" name="type" value="Rubber Bullets" id="rubber"><label for="rubber"><span class="radio">Rubber Bullets</span></label><br>
+      <input type="radio" name="type" value="RUBBER BULLETS" id="rubber"><label for="rubber"><span class="radio">Rubber Bullets</span></label><br>
       </div>
       <div class="container">
-      <input type="radio" name="type" value="Water Cannons" id="water"><label for="water"><span class="radio">Water Cannons</span></label><br>
+      <input type="radio" name="type" value="WATER CANNONS" id="water"><label for="water"><span class="radio">Water Cannons</span></label><br>
       </div>
       <div class="container">
-      <input type="radio" name="type" value="Flares" id="flares"><label for="flares"><span class="radio">Flares</span></label><br>
+      <input type="radio" name="type" value="FLARES" id="flares"><label for="flares"><span class="radio">Flares</span></label><br>
       </div>
       <div class="container">
-      <input type="radio" name="type" value="Flash Grenades" id="flash"><label for="flash"><span class="radio">Flash Grenades</span></label><br>
+      <input type="radio" name="type" value="FLASH GRENADES" id="flash"><label for="flash"><span class="radio">Flash Grenades</span></label><br>
       </div>
       <div class="container">
-      <input type="radio" name="type" value="Medic Needed" id="medic"><label for="medic"><span class="radio">Medic Needed</span></label><br>
+      <input type="radio" name="type" value="MEDIC NEEDED" id="medic"><label for="medic"><span class="radio">Medic Needed</span></label><br>
       </div>
     </section>
   </form><br>
@@ -49,7 +48,7 @@
   var latitude;
   var longitude;
   var incidents = [];
-  CB.CloudApp.init('piawrqmdcydf', 'f96bfed6-451e-445a-ab83-d4925807ca6e');
+  CB.CloudApp.init('veudsushakhr', '52b18942-9923-4fcd-8b71-634ec85c0778');
   function initMap() {
     var query = new CB.CloudQuery("report");
     query.setLimit(10000);
@@ -68,10 +67,10 @@
           });
           var markers = incidents.map(function(location, i) {
             var type = list[i].document.type;
-            if (type == "Mace", "Tear Gas", "Rubber Bullets", "Water Cannons", "Flares", "Flash Grenades") {
+            if (type == "MACE", "TEAR GAS", "RUBBER BULLETS", "WATER CANNONS", "FLARES", "FLASH GRENADES") {
               return new google.maps.Marker({
                 position: location,
-                label: type,
+                label: type.substring(0,2),
                 primaryColor: "#ee4b28"
               });
             }
@@ -132,7 +131,5 @@
       navigator.geolocation.getCurrentPosition(success, error);
     };
   </script>
-<script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFXkKVsEXyQxwN0ORuHODENd7l3SZSiXc&callback=initMap">
-</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFXkKVsEXyQxwN0ORuHODENd7l3SZSiXc&callback=initMap"></script>
   </html>
