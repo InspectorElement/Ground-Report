@@ -141,3 +141,6 @@ a:hover {
 #medicColor {
   color: #ee4b28;
 }
+label {
+  user-select: none;
+}
