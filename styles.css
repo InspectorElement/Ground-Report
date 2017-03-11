@@ -12,6 +12,7 @@ body {
 }
 h1 {
   color: #ee4b28;
+  user-select: none;
 }
 button {
   background-color: #ee4b28;
@@ -99,6 +100,7 @@ p {
   margin-left: 10%;
   margin-right: 10%;
   font-family: 'PT Sans', sans-serif;
+  user-select: none;
 }
 strong {
   font-family: 'PT Sans', sans-serif;
@@ -112,4 +114,10 @@ strong {
 #topLogo {
   width: 390px;
   align: center;
+  user-select: none;
+  user-drag: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
