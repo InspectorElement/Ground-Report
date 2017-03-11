@@ -135,5 +135,8 @@ a {
   color: #FEFEFA;
 }
 a:hover {
-  color: #FEFEFA;
+  color: #ee4b28;
+}
+#medicColor {
+  color: #ee4b28;
 }
