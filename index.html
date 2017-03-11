@@ -48,7 +48,7 @@
   var latitude;
   var longitude;
   var incidents = [];
-  CB.CloudApp.init('veudsushakhr', '52b18942-9923-4fcd-8b71-634ec85c0778');
+  CB.CloudApp.init('veudsushakhr', 'a4483f55-e614-44cb-a5ee-f7f62a43d39e');
   function initMap() {
     var query = new CB.CloudQuery("report");
     query.setLimit(10000);
@@ -57,7 +57,10 @@
         for (var i = 0; i < list.length; i++) {
           var lat = list[i].document.latitude;
           var lon = list[i].document.longitude;
-          var latlong = { "lat": lat, "lng": lon };
+          var latlong = {
+            "lat": lat,
+            "lng": lon
+          };
           incidents.push(latlong);
           var mapPlace = document.getElementById("map");
           var map = new google.maps.Map(mapPlace, {
@@ -70,7 +73,7 @@
             if (type == "MACE", "TEAR GAS", "RUBBER BULLETS", "WATER CANNONS", "FLARES", "FLASH GRENADES") {
               return new google.maps.Marker({
                 position: location,
-                label: type.substring(0,2),
+                label: type.substring(0,1),
                 primaryColor: "#ee4b28"
               });
             }
@@ -113,6 +116,7 @@
           obj.set("type", document.querySelector('[name="type"]:checked').value);
           obj.set("latitude", latitude);
           obj.set("longitude", longitude);
+          console.log("in setter.");
           obj.save({
             success: function(obj) {
               console.log("Save function successful.");
