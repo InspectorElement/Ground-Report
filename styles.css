@@ -4,8 +4,9 @@
 .footer {
   height: 50px;
   background-color: #383838;
-  margin-bottom: 0px;
+  margins: 0px;
   color: #FEFEFA;
+  padding: 10px;
 }
 .section input[type="radio"] {
   display: none;
@@ -129,4 +130,10 @@ strong {
   -webkit-user-drag: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+}
+a {
+  color: #FEFEFA;
+}
+a:hover {
+  color: #FEFEFA;
 }
