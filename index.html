@@ -8,6 +8,8 @@
     <script src="https://cloudboost.io/js-sdk/cloudboost.js"></script>
     <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+    <script src="sweetalert-master/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="sweetalert-master/dist/sweetalert.css">
     <link rel="stylesheet" type="text/css" href="styles.css">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   </head>
@@ -94,24 +96,24 @@
         }
       },
       error: function(err) {
-        alert("It seems that you are not connected to the internet. Please try again.");
+        swal("There's been an error!", "It seems that you are not connected to the internet. Please try again.", "error");
       }
     })
   }
   function geoFindMe() {
     var output = document.getElementById("out");
     if (!navigator.geolocation){
-      console.log("Geolocation is not supported by your browser.</p>");
+      console.log("Geolocation is not supported by your browser.");
       return;
     }
     function success(position) {
       latitude  = position.coords.latitude;
       longitude = position.coords.longitude;
         if ($("#select").val() == "null") {
-          alert("Please select a valid option.");
+          swal("There's been an error!", "Please select a valid option.", "error");
         }
         else {
-          alert("Your report has been received.");
+          swal("Thank you!", "Your report has been received.", "success");
           var obj = new CB.CloudObject("report");
           obj.set("type", document.querySelector('[name="type"]:checked').value);
           obj.set("latitude", latitude);
@@ -123,7 +125,7 @@
               $("#find").show();
             },
             error: function(err) {
-              alert("It seems that you are not connected to the internet. Please try again.");
+              swal("There's been an error!", "It seems that you are not connected to the internet. Please try again.", "error");
             }
           });
         }
