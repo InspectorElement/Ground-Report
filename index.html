@@ -42,7 +42,6 @@
     </section>
   </form><br>
    <button id="submit" onclick="geoFindMe()">Submit</button><br><br>
-  <div id="message"></div><br>
   <div id="map"></div><br><br>
 </div>
   <footer class="footer"><p><a href="https://github.com/InspectorElement/GroundWatch" target="_blank">GitHub</a> | <a href="https://github.com/InspectorElement/GroundWatch/blob/master/README.md" target="_blank">FAQ</a> |
@@ -95,8 +94,7 @@
         }
       },
       error: function(err) {
-        var message = "It seems that you are not connected to the internet. Please try again.";
-        $("#message").html(message);
+        alert("It seems that you are not connected to the internet. Please try again.");
       }
     })
   }
@@ -110,12 +108,10 @@
       latitude  = position.coords.latitude;
       longitude = position.coords.longitude;
         if ($("#select").val() == "null") {
-          var message = "Please select a valid option.";
-          $("#message").html(message);
+          alert("Please select a valid option.");
         }
         else {
-          var message = "Your report has been received.";
-          $("#message").html(message);
+          alert("Your report has been received.");
           var obj = new CB.CloudObject("report");
           obj.set("type", document.querySelector('[name="type"]:checked').value);
           obj.set("latitude", latitude);
@@ -127,8 +123,7 @@
               $("#find").show();
             },
             error: function(err) {
-              var message = "It seems that you are not connected to the internet. Please try again.";
-              $("#message").html(message);
+              alert("It seems that you are not connected to the internet. Please try again.");
             }
           });
         }
