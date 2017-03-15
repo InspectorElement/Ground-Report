@@ -47,7 +47,7 @@
   <div id="map"></div><br><br>
 </div>
   <footer class="footer"><p><a href="https://github.com/InspectorElement/GroundWatch" target="_blank">GitHub</a> | <a href="https://github.com/InspectorElement/GroundWatch/blob/master/README.md" target="_blank">FAQ</a> |
-    <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</footer>
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</footer>
   </body>
   <script>
   var latitude;
@@ -96,7 +96,15 @@
         }
       },
       error: function(err) {
-        swal("There's been an error!", "It seems that you are not connected to the internet. Please try again.", "error");
+        swal({
+          title:"Oops!",
+          text:"It seems that you are not connected to the internet! Please try again.",
+          type:"error",
+          showCancelButton: false,
+          confirmButtonColor: "#ee4b28",
+          confirmButtonText: "Okay!",
+          closeOnConfirm: true,
+        });
       }
     })
   }
@@ -110,10 +118,26 @@
       latitude  = position.coords.latitude;
       longitude = position.coords.longitude;
         if ($("#select").val() == "null") {
-          swal("There's been an error!", "Please select a valid option.", "error");
+          swal({
+            title:"Oops!",
+            text:"Please select a valid option.",
+            type:"error",
+            showCancelButton: false,
+            confirmButtonColor: "#ee4b28",
+            confirmButtonText: "Okay!",
+            closeOnConfirm: true,
+          });
         }
         else {
-          swal("Thank you!", "Your report has been received.", "success");
+          swal({
+            title:"Thank you!",
+            text:"Your report has been received.",
+            type:"success",
+            showCancelButton: false,
+            confirmButtonColor: "#ee4b28",
+            confirmButtonText: "Okay!",
+            closeOnConfirm: true,
+          });
           var obj = new CB.CloudObject("report");
           obj.set("type", document.querySelector('[name="type"]:checked').value);
           obj.set("latitude", latitude);
@@ -125,7 +149,15 @@
               $("#find").show();
             },
             error: function(err) {
-              swal("There's been an error!", "It seems that you are not connected to the internet. Please try again.", "error");
+              swal({
+                title:"Oops!",
+                text:"It seems that you are not connected to the internet! Please try again.",
+                type:"error",
+                showCancelButton: false,
+                confirmButtonColor: "#ee4b28",
+                confirmButtonText: "Okay!",
+                closeOnConfirm: true,
+              });
             }
           });
         }
@@ -137,4 +169,4 @@
     };
   </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFXkKVsEXyQxwN0ORuHODENd7l3SZSiXc&callback=initMap"></script>
-  </html>
+</html>
