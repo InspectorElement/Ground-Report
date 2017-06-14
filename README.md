@@ -22,7 +22,8 @@ When I wanted to know how to make my app the most useful for protesters, I atten
 #### What are GroundWatch’s key features?
 
 One of the most important features in GroundWatch is the incident map. It maps reports based on location, and clusters them into groups based on their location.
-Each pin has a different letter. The key for the letters is in the radio buttons above.
+
+The “Medic Needed” pins are red, to distinguish them from other reports.
 
 The program is web based, because some countries can block apps from the Apple and Google App Stores. Web firewalls are easier to break down, which makes web apps more accessible for protesters in those countries.
 

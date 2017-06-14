@@ -8,6 +8,7 @@
     <script src="https://cloudboost.io/js-sdk/cloudboost.js"></script>
     <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
     <script src="sweetalert-master/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="sweetalert-master/dist/sweetalert.css">
     <link rel="stylesheet" type="text/css" href="styles.css">
@@ -21,25 +22,23 @@
   <form id="select">
     <section id="first" class="section">
       <div class="container">
-      <input type="radio" name="type" value="MACE" id="mace"><label for="mace"><span class="radio">Mace (M)</span></label><br>
+      <div class="container">
+      <input type="radio" name="type" value="fa fa-eye" id="tear"><label for="tear"><span class="radio">Tear Gas ( <i class="fa fa-eye" aria-hidden="true"></i> )</span></label><br>
       </div>
       <div class="container">
-      <input type="radio" name="type" value="TEAR GAS" id="tear"><label for="tear"><span class="radio">Tear Gas (T)</span></label><br>
+      <input type="radio" name="type" value="fa fa-dot-circle-o" id="rubber"><label for="rubber"><span class="radio">Rubber Bullets ( <i class="fa fa-dot-circle-o" aria-hidden="true"></i> )</span></label><br>
       </div>
       <div class="container">
-      <input type="radio" name="type" value="RUBBER BULLETS" id="rubber"><label for="rubber"><span class="radio">Rubber Bullets (R)</span></label><br>
+      <input type="radio" name="type" value="fa fa-tint" id="water"><label for="water"><span class="radio">Water Cannons ( <i class="fa fa-tint" aria-hidden="true"></i> )</span></label><br>
       </div>
       <div class="container">
-      <input type="radio" name="type" value="WATER CANNONS" id="water"><label for="water"><span class="radio">Water Cannons (W)</span></label><br>
+      <input type="radio" name="type" value="fa fa-crosshairs" id="gun"><label for="gun"><span class="radio">Guns ( <i class="fa fa-crosshairs" aria-hidden="true"></i> )</span></label><br>
       </div>
       <div class="container">
-      <input type="radio" name="type" value="FLARES" id="flares"><label for="flares"><span class="radio">Flares (F)</span></label><br>
-      </div>
-      <div class="container">
-      <input type="radio" name="type" value="STUN GRENADES" id="flash"><label for="flash"><span class="radio">Stun Grenades (S)</span></label><br>
+      <input type="radio" name="type" value="fa fa-bolt" id="flash"><label for="flash"><span class="radio">Stun Grenades ( <i class="fa fa-bolt" aria-hidden="true"></i> )</span></label><br>
       </div>
       <div class="container" id="medicColor">
-      <input type="radio" name="type" value="MEDIC NEEDED" id="medic"><label for="medic"><span class="radio">Medic Needed (M)</span></label><br>
+      <input type="radio" name="type" value="fa fa-plus-square" id="medic"><label for="medic"><span class="radio">Medic Needed ( <i class="fa fa-plus-square" aria-hidden="true"></i> )</span></label><br>
       </div>
     </section>
   </form><br>
@@ -72,20 +71,21 @@
             zoom: 4,
             center: {lat: 40.7128, lng: -74.0059},
             gestureHandling: 'auto'
+
           });
           var markers = incidents.map(function(location, i) {
             var type = list[i].document.type;
-            if (type == "MACE", "TEAR GAS", "RUBBER BULLETS", "WATER CANNONS", "FLARES", "FLASH GRENADES") {
+            if (type == "fa fa-eye", "fa fa-dot-circle-o", "fa fa-tint", "fa fa-crosshairs", "fa fa-bolt") {
               return new google.maps.Marker({
                 position: location,
-                label: type.substring(0,1),
+                label: "<i class=" + type + " aria-hidden='true'></i>",
                 primaryColor: "#ee4b28"
               });
             }
             else {
               return new google.maps.Marker({
                 position: location,
-                label: type,
+                label: "<i class='fa fa-plus-square' aria-hidden='true'></i>",
                 primaryColor: "#383838"
               });
             }
@@ -145,8 +145,7 @@
           console.log("in setter.");
           obj.save({
             success: function(obj) {
-              console.log("Save function successful.");
-              $("#find").show();
+               $("#find").show();
             },
             error: function(err) {
               swal({
