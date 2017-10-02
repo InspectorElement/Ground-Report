@@ -41,6 +41,9 @@
       <div class="container" id="medicColor">
       <input type="radio" name="type" value="fa fa-plus-square" id="medic"><label for="medic"><span class="radio">Medic Needed ( <i class="fa fa-plus-square" aria-hidden="true"></i> )</span></label><br>
       </div>
+      <div class="container" id="testColor">
+      <input type="radio" name="type" value="fa fa-flag" id="flag"><label for="flag"><span class="radio">Test ( <i class="fa fa-flag" aria-hidden="true"></i> )</span></label><br>
+      </div>
     </section>
   </form><br>
    <button id="submit" onclick="geoFindMe()">Submit</button><br><br>
@@ -301,6 +304,20 @@
                   strokeColor: '#383838',
                   strokeOpacity: 1,
                   fillColor: '#383838',
+                  fillOpacity: 1
+                },
+              });
+            }
+            else if (type == "fa fa-flag") {
+              return new google.maps.Marker({
+                position: location,
+                icon: {
+                  path: fontawesome.markers.FLAG,
+                  scale: 0.5,
+                  strokeWeight: 1,
+                  strokeColor: '#0059b3',
+                  strokeOpacity: 1,
+                  fillColor: '#0059b3',
                   fillOpacity: 1
                 },
               });
