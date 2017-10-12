@@ -107,7 +107,7 @@ input[type="radio"]:checked + label span.radio::after {
   background-color: #ee4b28;
   font-family: 'PT Sans', sans-serif;
 }
-p {
+p, ul {
   margin-left: 10%;
   margin-right: 10%;
   font-family: 'PT Sans', sans-serif;
@@ -146,4 +146,13 @@ a:hover {
 }
 label {
   user-select: none;
+}
+.policy {
+  text-align: left;
+}
+ul {
+  text-align: left;
+}
+.policyheader {
+  text-align: left;
 }
