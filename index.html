@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width">
     <title>GroundWatch</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type='text/javascript' src='script.js'></script>
     <script src="https://cloudboost.io/js-sdk/cloudboost.js"></script>
     <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
@@ -53,10 +54,12 @@
   <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a> | <a href="https://oliviasteger.github.io/GroundWatch/privacy" target="_blank">Privacy Policy<a></footer>
   </body>
   <script>
+  var mykey = config.NAME;
+  var secretkey = config.KEY;
   var latitude;
   var longitude;
   var incidents = [];
-  CB.CloudApp.init('veudsushakhr', 'a4483f55-e614-44cb-a5ee-f7f62a43d39e');
+  CB.CloudApp.init(mykey, secretkey);
 
 
   var date = Date();
