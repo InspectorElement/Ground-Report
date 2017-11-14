@@ -1,6 +1,6 @@
 ### What is GroundWatch?
 
-GroundWatch is a mobile responsive web app that allows users to anonymously report violence at protests.
+GroundWatch is a mobile responsive web app that allows users to anonymously report violence at protests. You can download the mobile app from the App Store or Google Play.
 
 #### How does it work?
 
@@ -31,6 +31,4 @@ The program is web based, because some countries can block apps from the Apple a
 
 #### What’s next for GroundWatch?
 
-At the Washington protest, I noticed that it’s really hard to access the web. I plan to build an app that makes a mesh network using peer-to-peer WiFi, eliminating the need for a hotspot.
-
-I am also planning to reach out to a social justice organization to demonstrate the app and receive feedback.
+I am planning to reach out to a social justice organization to demonstrate the app and receive feedback.
