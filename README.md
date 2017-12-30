@@ -31,4 +31,4 @@ The program is web based, because some countries can block apps from the Apple a
 
 #### What’s next for GroundWatch?
 
-I am planning to reach out to a social justice organization to demonstrate the app and receive feedback.
+I'm finishing a feature that allows users to report violence without WiFi. I'm also planning to reach out to social justice organizations to recieve feedback on the app.
