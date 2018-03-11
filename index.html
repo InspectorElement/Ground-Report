@@ -60,7 +60,36 @@
   var longitude;
   var incidents = [];
   CB.CloudApp.init(mykey, secretkey);
-
+  function getDate() {
+    var date = Date();
+    date = date.slice(4, -18);
+    if (date.slice(0,3) == "Jan") {
+      loggedDate = date.slice(7,12) + "/01/" + date.slice(4,6);
+    } else if (date.slice(0,3) == "Feb") {
+      loggedDate = date.slice(7,12) + "/02/" + date.slice(4,6);
+    } else if (date.slice(0,3) == "Mar") {
+      loggedDate = date.slice(7,12) + "/03/" + date.slice(4,6);
+    } else if (date.slice(0,3) == "Apr") {
+      loggedDate = date.slice(7,12) + "/04/" + date.slice(4,6);
+    } else if (date.slice(0,3) == "May") {
+      loggedDate = date.slice(7,12) + "/05/" + date.slice(4,6);
+    } else if (date.slice(0,3) == "Jun") {
+      loggedDate = date.slice(7,12) + "/06/" + date.slice(4,6);
+    } else if (date.slice(0,3) == "Jul") {
+      loggedDate = date.slice(7,12) + "/07/" + date.slice(4,6);
+    } else if (date.slice(0,3) == "Aug") {
+      loggedDate = date.slice(7,12) + "/08/" + date.slice(4,6);
+    } else if (date.slice(0,3) == "Sep") {
+      loggedDate = date.slice(7,12) + "/09/" + date.slice(4,6);
+    } else if (date.slice(0,3) == "Oct") {
+      loggedDate = date.slice(7,12) + "/10/" + date.slice(4,6);
+    } else if (date.slice(0,3) == "Nov") {
+      loggedDate = date.slice(7,12) + "/11/" + date.slice(4,6);
+    } else {
+      loggedDate = date.slice(7,12) + "/12/" + date.slice(4,6);
+    }
+    loggedDate = [date.slice(0, 11), ',', date.slice(11)].join('')
+  }
 
   var date = Date();
   date = date.slice(4, -24);
@@ -419,11 +448,12 @@
             confirmButtonText: "Okay!",
             closeOnConfirm: true,
           });
+          getDate();
           var obj = new CB.CloudObject("report");
           obj.set("type", document.querySelector('[name="type"]:checked').value);
           obj.set("latitude", latitude);
           obj.set("longitude", longitude);
-          console.log("in setter.");
+          obj.set("timeLogged", loggedDate);
           obj.save({
             success: function(obj) {
                $("#find").show();
