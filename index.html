@@ -59,7 +59,9 @@
   var latitude;
   var longitude;
   var incidents = [];
+  var loggedDate;
   CB.CloudApp.init(mykey, secretkey);
+
   function getDate() {
     var date = Date();
     date = date.slice(4, -18);
