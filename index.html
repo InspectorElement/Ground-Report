@@ -1,135 +1,170 @@
 <!DOCTYPE html>
-  <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>GroundWatch</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script type='text/javascript' src='config.js'></script>
-    <script src="https://cloudboost.io/js-sdk/cloudboost.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
-    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
-    <script src="sweetalert-master/dist/sweetalert.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="sweetalert-master/dist/sweetalert.css">
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <script src="fontawesome-markers.min.js"></script>
-  </head>
-  <body>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>GroundWatch</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script type='text/javascript' src='config.js'></script>
+  <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+
+  <script
+    src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+  <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+  <script src="sweetalert-master/dist/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="sweetalert-master/dist/sweetalert.css">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <script src="fontawesome-markers.min.js"></script>
+</head>
+
+<body>
   <center>
     <div class="content">
-  <image id="topLogo" src="https://raw.githubusercontent.com/InspectorElement/GroundWatch/master/logo.png" alt="logo"></image>
-  <p><strong><strong>Anonymously report violence at protests.</strong></strong></p>
-  <form id="select">
-    <section id="first" class="section">
-      <div class="container">
-      <div class="container">
-      <input type="radio" name="type" value="fa fa-eye" id="tear"><label for="tear"><span class="radio">Tear Gas ( <i class="fa fa-eye" aria-hidden="true"></i> )</span></label><br>
-      </div>
-      <div class="container">
-      <input type="radio" name="type" value="fa fa-dot-circle-o" id="rubber"><label for="rubber"><span class="radio">Rubber Bullets ( <i class="fa fa-dot-circle-o" aria-hidden="true"></i> )</span></label><br>
-      </div>
-      <div class="container">
-      <input type="radio" name="type" value="fa fa-tint" id="water"><label for="water"><span class="radio">Water Cannons ( <i class="fa fa-tint" aria-hidden="true"></i> )</span></label><br>
-      </div>
-      <div class="container">
-      <input type="radio" name="type" value="fa fa-crosshairs" id="gun"><label for="gun"><span class="radio">Guns ( <i class="fa fa-crosshairs" aria-hidden="true"></i> )</span></label><br>
-      </div>
-      <div class="container">
-      <input type="radio" name="type" value="fa fa-bolt" id="flash"><label for="flash"><span class="radio">Stun Grenades ( <i class="fa fa-bolt" aria-hidden="true"></i> )</span></label><br>
-      </div>
-      <div class="container" id="medicColor">
-      <input type="radio" name="type" value="fa fa-plus-square" id="medic"><label for="medic"><span class="radio">Medic Needed ( <i class="fa fa-plus-square" aria-hidden="true"></i> )</span></label><br>
-      </div>
-      <div class="container" id="testColor">
-      <input type="radio" name="type" value="fa fa-flag" id="flag"><label for="flag"><span class="radio">Test ( <i class="fa fa-flag" aria-hidden="true"></i> )</span></label><br>
-      </div>
-    </section>
-  </form><br>
-   <button id="submit" onclick="geoFindMe()">Submit</button><br><br>
-  <div id="map"></div><br><br>
-</div>
-  <footer class="footer"><p><a href="https://github.com/InspectorElement/GroundWatch" target="_blank">GitHub</a> | <a href="https://github.com/InspectorElement/GroundWatch/blob/master/README.md" target="_blank">FAQ</a> |
-  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a> | <a href="https://oliviasteger.github.io/GroundWatch/privacy" target="_blank">Privacy Policy<a></footer>
-  </body>
-  <script>
-  var mykey = config.NAME;
-  var secretkey = config.KEY;
-  var latitude;
-  var longitude;
+      <image id="topLogo" src="https://raw.githubusercontent.com/InspectorElement/GroundWatch/master/logo.png"
+        alt="logo"></image>
+      <p><strong><strong>Anonymously report violence at protests.</strong></strong></p>
+      <form id="select">
+        <section id="first" class="section">
+          <div class="container">
+            <div class="container">
+              <input type="radio" name="type" value="fa fa-eye" id="tear"><label for="tear"><span class="radio">Tear Gas
+                  ( <i class="fa fa-eye" aria-hidden="true"></i> )</span></label><br>
+            </div>
+            <div class="container">
+              <input type="radio" name="type" value="fa fa-dot-circle-o" id="rubber"><label for="rubber"><span
+                  class="radio">Rubber Bullets ( <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                  )</span></label><br>
+            </div>
+            <div class="container">
+              <input type="radio" name="type" value="fa fa-tint" id="water"><label for="water"><span class="radio">Water
+                  Cannons ( <i class="fa fa-tint" aria-hidden="true"></i> )</span></label><br>
+            </div>
+            <div class="container">
+              <input type="radio" name="type" value="fa fa-crosshairs" id="gun"><label for="gun"><span
+                  class="radio">Guns ( <i class="fa fa-crosshairs" aria-hidden="true"></i> )</span></label><br>
+            </div>
+            <div class="container">
+              <input type="radio" name="type" value="fa fa-bolt" id="flash"><label for="flash"><span class="radio">Stun
+                  Grenades ( <i class="fa fa-bolt" aria-hidden="true"></i> )</span></label><br>
+            </div>
+            <div class="container" id="medicColor">
+              <input type="radio" name="type" value="fa fa-plus-square" id="medic"><label for="medic"><span
+                  class="radio">Medic Needed ( <i class="fa fa-plus-square" aria-hidden="true"></i> )</span></label><br>
+            </div>
+            <div class="container" id="testColor">
+              <input type="radio" name="type" value="fa fa-flag" id="flag"><label for="flag"><span class="radio">Test (
+                  <i class="fa fa-flag" aria-hidden="true"></i> )</span></label><br>
+            </div>
+        </section>
+      </form><br>
+      <button id="submit" onclick="geoFindMe()">Submit</button><br><br>
+      <div id="map"></div><br><br>
+    </div>
+    <footer class="footer">
+      <p><a href="https://github.com/InspectorElement/GroundWatch" target="_blank">GitHub</a> | <a
+          href="https://github.com/InspectorElement/GroundWatch/blob/master/README.md" target="_blank">FAQ</a> |
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International License</a> | <a href="https://oliviasteger.github.io/GroundWatch/privacy"
+          target="_blank">Privacy Policy<a>
+    </footer>
+</body>
+<script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyAxxfDZ9W1x_iWbJOvgJejUgYpbOk_UqMc",
+    authDomain: "groundwatch-1b26e.firebaseapp.com",
+    databaseURL: "https://groundwatch-1b26e.firebaseio.com",
+    projectId: "groundwatch-1b26e",
+    storageBucket: "groundwatch-1b26e.appspot.com",
+    messagingSenderId: "812223738339",
+    appId: "1:812223738339:web:340ad41b9c1907758f30d6",
+    measurementId: "G-7E09WER0ZH"
+  };
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
   var incidents = [];
-  var loggedDate;
-  CB.CloudApp.init(mykey, secretkey);
+
+  var db = firebase.firestore();
 
   function getDate() {
     var date = Date();
     date = date.slice(4, -18);
-    if (date.slice(0,3) == "Jan") {
-      loggedDate = date.slice(7,12) + "/01/" + date.slice(4,6);
-    } else if (date.slice(0,3) == "Feb") {
-      loggedDate = date.slice(7,12) + "/02/" + date.slice(4,6);
-    } else if (date.slice(0,3) == "Mar") {
-      loggedDate = date.slice(7,12) + "/03/" + date.slice(4,6);
-    } else if (date.slice(0,3) == "Apr") {
-      loggedDate = date.slice(7,12) + "/04/" + date.slice(4,6);
-    } else if (date.slice(0,3) == "May") {
-      loggedDate = date.slice(7,12) + "/05/" + date.slice(4,6);
-    } else if (date.slice(0,3) == "Jun") {
-      loggedDate = date.slice(7,12) + "/06/" + date.slice(4,6);
-    } else if (date.slice(0,3) == "Jul") {
-      loggedDate = date.slice(7,12) + "/07/" + date.slice(4,6);
-    } else if (date.slice(0,3) == "Aug") {
-      loggedDate = date.slice(7,12) + "/08/" + date.slice(4,6);
-    } else if (date.slice(0,3) == "Sep") {
-      loggedDate = date.slice(7,12) + "/09/" + date.slice(4,6);
-    } else if (date.slice(0,3) == "Oct") {
-      loggedDate = date.slice(7,12) + "/10/" + date.slice(4,6);
-    } else if (date.slice(0,3) == "Nov") {
-      loggedDate = date.slice(7,12) + "/11/" + date.slice(4,6);
+    if (date.slice(0, 3) == "Jan") {
+      loggedDate = date.slice(7, 12) + "/01/" + date.slice(4, 6);
+    } else if (date.slice(0, 3) == "Feb") {
+      loggedDate = date.slice(7, 12) + "/02/" + date.slice(4, 6);
+    } else if (date.slice(0, 3) == "Mar") {
+      loggedDate = date.slice(7, 12) + "/03/" + date.slice(4, 6);
+    } else if (date.slice(0, 3) == "Apr") {
+      loggedDate = date.slice(7, 12) + "/04/" + date.slice(4, 6);
+    } else if (date.slice(0, 3) == "May") {
+      loggedDate = date.slice(7, 12) + "/05/" + date.slice(4, 6);
+    } else if (date.slice(0, 3) == "Jun") {
+      loggedDate = date.slice(7, 12) + "/06/" + date.slice(4, 6);
+    } else if (date.slice(0, 3) == "Jul") {
+      loggedDate = date.slice(7, 12) + "/07/" + date.slice(4, 6);
+    } else if (date.slice(0, 3) == "Aug") {
+      loggedDate = date.slice(7, 12) + "/08/" + date.slice(4, 6);
+    } else if (date.slice(0, 3) == "Sep") {
+      loggedDate = date.slice(7, 12) + "/09/" + date.slice(4, 6);
+    } else if (date.slice(0, 3) == "Oct") {
+      loggedDate = date.slice(7, 12) + "/10/" + date.slice(4, 6);
+    } else if (date.slice(0, 3) == "Nov") {
+      loggedDate = date.slice(7, 12) + "/11/" + date.slice(4, 6);
     } else {
-      loggedDate = date.slice(7,12) + "/12/" + date.slice(4,6);
+      loggedDate = date.slice(7, 12) + "/12/" + date.slice(4, 6);
     }
     loggedDate = [date.slice(0, 11), ',', date.slice(11)].join('')
   }
 
   var date = Date();
   date = date.slice(4, -24);
-  if (date.slice(0,3) == "Jan") {
-    formatted = date.slice(7,12) + "/01/" + date.slice(4,6);
-  } else if (date.slice(0,3) == "Feb") {
-    formatted = date.slice(7,12) + "/02/" + date.slice(4,6);
-  } else if (date.slice(0,3) == "Mar") {
-    formatted = date.slice(7,12) + "/03/" + date.slice(4,6);
-  } else if (date.slice(0,3) == "Apr") {
-    formatted = date.slice(7,12) + "/04/" + date.slice(4,6);
-  } else if (date.slice(0,3) == "May") {
-    formatted = date.slice(7,12) + "/05/" + date.slice(4,6);
-  } else if (date.slice(0,3) == "Jun") {
-    formatted = date.slice(7,12) + "/06/" + date.slice(4,6);
-  } else if (date.slice(0,3) == "Jul") {
-    formatted = date.slice(7,12) + "/07/" + date.slice(4,6);
-  } else if (date.slice(0,3) == "Aug") {
-    formatted = date.slice(7,12) + "/08/" + date.slice(4,6);
-  } else if (date.slice(0,3) == "Sep") {
-    formatted = date.slice(7,12) + "/09/" + date.slice(4,6);
-  } else if (date.slice(0,3) == "Oct") {
-    formatted = date.slice(7,12) + "/10/" + date.slice(4,6);
-  } else if (date.slice(0,3) == "Nov") {
-    formatted = date.slice(7,12) + "/11/" + date.slice(4,6);
+  if (date.slice(0, 3) == "Jan") {
+    formatted = date.slice(7, 12) + "/01/" + date.slice(4, 6);
+  } else if (date.slice(0, 3) == "Feb") {
+    formatted = date.slice(7, 12) + "/02/" + date.slice(4, 6);
+  } else if (date.slice(0, 3) == "Mar") {
+    formatted = date.slice(7, 12) + "/03/" + date.slice(4, 6);
+  } else if (date.slice(0, 3) == "Apr") {
+    formatted = date.slice(7, 12) + "/04/" + date.slice(4, 6);
+  } else if (date.slice(0, 3) == "May") {
+    formatted = date.slice(7, 12) + "/05/" + date.slice(4, 6);
+  } else if (date.slice(0, 3) == "Jun") {
+    formatted = date.slice(7, 12) + "/06/" + date.slice(4, 6);
+  } else if (date.slice(0, 3) == "Jul") {
+    formatted = date.slice(7, 12) + "/07/" + date.slice(4, 6);
+  } else if (date.slice(0, 3) == "Aug") {
+    formatted = date.slice(7, 12) + "/08/" + date.slice(4, 6);
+  } else if (date.slice(0, 3) == "Sep") {
+    formatted = date.slice(7, 12) + "/09/" + date.slice(4, 6);
+  } else if (date.slice(0, 3) == "Oct") {
+    formatted = date.slice(7, 12) + "/10/" + date.slice(4, 6);
+  } else if (date.slice(0, 3) == "Nov") {
+    formatted = date.slice(7, 12) + "/11/" + date.slice(4, 6);
   } else {
-    formatted = date.slice(7,12) + "/12/" + date.slice(4,6);
+    formatted = date.slice(7, 12) + "/12/" + date.slice(4, 6);
   }
 
   function initMap() {
-    var query = new CB.CloudQuery("report");
-    query.setLimit(10000);
-    query.greaterThan("timeLogged", formatted);
-    query.find({
-      success: function(list) {
-        for (var i = 0; i < list.length; i++) {
-          var lat = list[i].document.latitude;
-          var lon = list[i].document.longitude;
+    db.collection("reports").get().then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+
+        let now = new Date();
+        let docDate = new Date(doc.data().timeLogged);
+        const oneDay = 60 * 60 * 24 * 1000;
+
+
+        if ((now - docDate) < oneDay) {
+
+          var lat = doc.data().latitude;
+          var lon = doc.data().longitude;
           var latlong = {
             "lat": lat,
             "lng": lon
@@ -138,7 +173,7 @@
           var mapPlace = document.getElementById("map");
           var map = new google.maps.Map(mapPlace, {
             zoom: 4,
-            center: {lat: 40.7128, lng: -74.0059},
+            center: { lat: 40.7128, lng: -74.0059 },
             gestureHandling: 'auto',
             styles: [
               {
@@ -301,8 +336,8 @@
               }
             ]
           });
-          var markers = incidents.map(function(location, i) {
-            var type = list[i].document.type;
+          var markers = incidents.map(function (location, i) {
+            var type = doc.data().type;
             if (type == "fa fa-eye") {
               return new google.maps.Marker({
                 position: location,
@@ -404,81 +439,73 @@
           });
           var markerCluster = new MarkerClusterer(map, markers, {
             imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-            });
+          });
         }
-      },
-      error: function(err) {
+      });
+    });
+  }
+
+  function geoFindMe() {
+    var output = document.getElementById("out");
+    if (!navigator.geolocation) {
+      console.log("Geolocation is not supported by your browser.");
+      return;
+    }
+    function success(position) {
+      latitude = position.coords.latitude;
+      longitude = position.coords.longitude;
+      if ($("#select").val() == "null") {
         swal({
-          title:"Oops!",
-          text:"It seems that you are not connected to the internet! Please try again.",
-          type:"error",
+          title: "Oops!",
+          text: "Please select a valid option.",
+          type: "error",
           showCancelButton: false,
           confirmButtonColor: "#ee4b28",
           confirmButtonText: "Okay!",
           closeOnConfirm: true,
         });
       }
-    })
-  }
-  function geoFindMe() {
-    var output = document.getElementById("out");
-    if (!navigator.geolocation){
-      console.log("Geolocation is not supported by your browser.");
-      return;
+      else {
+        swal({
+          title: "Thank you!",
+          text: "Your report has been received.",
+          type: "success",
+          showCancelButton: false,
+          confirmButtonColor: "#ee4b28",
+          confirmButtonText: "Okay!",
+          closeOnConfirm: true,
+        });
+        getDate();
+
+        db.collection("reports").add({
+          latitude: latitude,
+          longitude: longitude,
+          timeLogged: loggedDate,
+          type: document.querySelector('[name="type"]:checked').value
+        })
+          .then(function (docRef) {
+            $("#find").show();
+          })
+          .catch(function (error) {
+            swal({
+              title: "Oops!",
+              text: "It seems that you are not connected to the internet! Please try again.",
+              type: "error",
+              showCancelButton: false,
+              confirmButtonColor: "#ee4b28",
+              confirmButtonText: "Okay!",
+              closeOnConfirm: true,
+            });
+          });
+      }
     }
-    function success(position) {
-      latitude  = position.coords.latitude;
-      longitude = position.coords.longitude;
-        if ($("#select").val() == "null") {
-          swal({
-            title:"Oops!",
-            text:"Please select a valid option.",
-            type:"error",
-            showCancelButton: false,
-            confirmButtonColor: "#ee4b28",
-            confirmButtonText: "Okay!",
-            closeOnConfirm: true,
-          });
-        }
-        else {
-          swal({
-            title:"Thank you!",
-            text:"Your report has been received.",
-            type:"success",
-            showCancelButton: false,
-            confirmButtonColor: "#ee4b28",
-            confirmButtonText: "Okay!",
-            closeOnConfirm: true,
-          });
-          getDate();
-          var obj = new CB.CloudObject("report");
-          obj.set("type", document.querySelector('[name="type"]:checked').value);
-          obj.set("latitude", latitude);
-          obj.set("longitude", longitude);
-          obj.set("timeLogged", loggedDate);
-          obj.save({
-            success: function(obj) {
-               $("#find").show();
-            },
-            error: function(err) {
-              swal({
-                title:"Oops!",
-                text:"It seems that you are not connected to the internet! Please try again.",
-                type:"error",
-                showCancelButton: false,
-                confirmButtonColor: "#ee4b28",
-                confirmButtonText: "Okay!",
-                closeOnConfirm: true,
-              });
-            }
-          });
-        }
-      }
-      function error() {
-        console.log("Unable to retrieve your location");
-      }
-      navigator.geolocation.getCurrentPosition(success, error);
-    };
-  </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFXkKVsEXyQxwN0ORuHODENd7l3SZSiXc&callback=initMap"></script>
+    function error() {
+      console.log("Unable to retrieve your location");
+    }
+    navigator.geolocation.getCurrentPosition(success, error);
+  };
+</script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFXkKVsEXyQxwN0ORuHODENd7l3SZSiXc&callback=initMap"></script>
+
 </html>
